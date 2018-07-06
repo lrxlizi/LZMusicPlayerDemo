@@ -30,10 +30,12 @@
     }
     return self;
 }
+
+#pragma mark 布局
 -(void)addSubviews{
     
     self.backgroundColor=[[UIColor blackColor]colorWithAlphaComponent:0.7];
-    
+
     /*封面头像*/
     _headerIV=[[UIImageView alloc]init];
     [self addSubview:_headerIV];
@@ -133,8 +135,38 @@
         }
     };
     
+    //监听耳机事件
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(audioRouteChangeListenerCallback:)   name:AVAudioSessionRouteChangeNotification object:nil];
 }
-//下一首按钮点击
+#pragma mark 监听耳机事件
+- (void)audioRouteChangeListenerCallback:(NSNotification*)notification
+{
+    NSDictionary *interuptionDict = notification.userInfo;
+    NSInteger routeChangeReason = [[interuptionDict valueForKey:AVAudioSessionRouteChangeReasonKey] integerValue];
+    switch (routeChangeReason) {
+        case AVAudioSessionRouteChangeReasonNewDeviceAvailable:
+            NSLog(@"AVAudioSessionRouteChangeReasonNewDeviceAvailable");
+            NSLog(@"耳机插入");
+            break;
+        case AVAudioSessionRouteChangeReasonOldDeviceUnavailable:
+            [self stop];
+            NSLog(@"耳机拔出，停止播放操作");
+            break;
+        case AVAudioSessionRouteChangeReasonCategoryChange:
+            // called at start - also when other audio wants to play
+            NSLog(@"AVAudioSessionRouteChangeReasonCategoryChange");
+            break;
+    }
+}
+//耳机拔出，停止播放
+- (void)stop{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[LZPlayerManager lzPlayerManager] playAndPause];
+        [LZPlayerBottomView lzPlayerBottomView].isSongPlayer = NO;
+    });
+}
+
+#pragma mark 下一首按钮点击
 -(void)nextBtnClicked:(UIButton *)btn{
     
     if ([LZPlayerManager lzPlayerManager].isPlay) {
@@ -144,19 +176,23 @@
     [LZSignSongIdSimple lzSignSongIdSimple].isFirstClickedListPlayer=0;//第一次点击列表播放
 
 }
-//上一首
+#pragma mark 上一首按钮点击
 -(void)previousBtnClicked:(UIButton *)btn{
     
     [[LZPlayerManager lzPlayerManager] playPrevious];
     [self reloadDataWithIndex:[LZPlayerManager lzPlayerManager].index];
+    
 }
-//播放暂停
+#pragma 播放暂停点击事件(底部和详情页共用)
 -(void)playAndPauseBtnClicekd:(UIButton *)btn{
-
+    
     if ([LZPlayerManager lzPlayerManager].isPlay) {
         [btn setImage:[UIImage imageNamed:@"icons_play_music1"] forState:(UIControlStateNormal)];
+        [self.playAndPauseBtn setImage:[UIImage imageNamed:@"icons_play_music1"] forState:(UIControlStateNormal)];
     }else{
         [btn setImage:[UIImage imageNamed:@"icons_stop_music1"] forState:(UIControlStateNormal)];
+        [self.playAndPauseBtn setImage:[UIImage imageNamed:@"icons_stop_music1"] forState:(UIControlStateNormal)];
+         
     }
     if ([LZPlayerManager lzPlayerManager].isFristPlayerPauseBtn==NO) {
         [self reloadDataWithIndex:0];//标记是不是没点列表直接点了播放按钮如果是就默认播放按钮
@@ -175,7 +211,19 @@
          [self.playAndPauseBtn setImage:[UIImage imageNamed:@"icons_play_music1"] forState:(UIControlStateNormal)];
     }
 }
-//定时器
+#pragma mark 定时器
+//开启定时器
+-(void)startTimer{
+    self.timer =[NSTimer timerWithTimeInterval:0.1 target:self selector:@selector(timerAct) userInfo:nil repeats:YES];
+    [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+}
+//关闭定时器
+-(void)stopTimer{
+    
+    [self.timer invalidate];
+    self.timer = nil;
+}
+//执行定时器
 -(void)timerAct{
     
     if ([LZPlayerManager lzPlayerManager].player.currentTime.timescale == 0 || [LZPlayerManager lzPlayerManager].player.currentItem.duration.timescale == 0 ) {
@@ -204,7 +252,8 @@
         [UIView commitAnimations];
     }
 }
-//自动下一首或者是单曲循环
+
+#pragma mark 自动下一首或者是单曲循环
 -(void)autoNext{
     
     if ([LZPlayerBottomView lzPlayerBottomView].isSinglecycle) {//单曲循环
@@ -216,7 +265,7 @@
    
 }
 
-//播放时调用
+#pragma mark 播放时调用
 - (void)reloadDataWithIndex:(NSInteger)index
 {
     //读取歌曲的总时间
@@ -246,16 +295,7 @@
     //修改进度
     self.progressSlider.minimumValue = 0;
 }
-//定时器
--(void)startTimer{
-    self.timer =[NSTimer timerWithTimeInterval:0.1 target:self selector:@selector(timerAct) userInfo:nil repeats:YES];
-    [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
-}
--(void)stopTimer{
-    
-    [self.timer invalidate];
-    self.timer = nil;
-}
+
 #pragma mark 锁屏传值
 -(void)lockScreen:(NSString *)totalTime{
     NSNumber *time = [NSNumber numberWithDouble:[totalTime doubleValue]];

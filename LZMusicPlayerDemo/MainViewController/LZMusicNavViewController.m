@@ -32,11 +32,15 @@
 
 -(void)jumpBtnClicked{
     
-    if ( [LZPlayerManager lzPlayerManager].isPlay) {
+    if (![HealpClass isNullOrNilWithObject:[LZSignSongIdSimple lzSignSongIdSimple].songID]) {
         UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         LZMusicDetailVIewController *detail = [storyBoard instantiateViewControllerWithIdentifier:@"LZMusicDetailVIewController"];
         [self presentViewController:detail animated:YES completion:nil];
     }
+    
+//    if ( [LZPlayerManager lzPlayerManager].isPlay) {
+//
+//    }
 }
 -(BOOL)shouldAutorotate{
     return NO;

@@ -106,7 +106,6 @@ static LZPlayerManager *_lzPlayerManager = nil;
     } noSave:^{//未下载
         url  = [NSURL URLWithString:urlString];
         item = [[AVPlayerItem alloc] initWithURL:url];
-        
     }];
     [self.player replaceCurrentItemWithPlayerItem:item];
     [self playerPlay];

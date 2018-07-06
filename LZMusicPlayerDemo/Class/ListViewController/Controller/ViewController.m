@@ -27,6 +27,7 @@
     self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
     self.totalSongArr         = [NSMutableArray array];
     self.navigationItem.title = @"LZMusicPlayerDemo";
+    
     [LZSignSongIdSimple lzSignSongIdSimple].songID = @"";
     [LZPlayerBottomView lzPlayerBottomView].reloadBlock = ^{
         [self.musicTableVIew reloadData];//刷新当前播放歌曲songName和songerName字体的颜色
@@ -75,9 +76,9 @@
    
 
 }
+#pragma mark 数据请求
 -(void)initdata{
     [LZNetWorking sendPostNetWorkWithUrl:kMusicUrl parameters:nil successBlock:^(id data) {
-        NSLog(@"data===%@",data);
         NSArray *array = data[@"tracks"][@"list"];
         if (array.count) {
             LZUserDefaultsSET(array, SONGLIST);

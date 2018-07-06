@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "LZMusicBaseViewController.h"
+
 @interface ViewController : LZMusicBaseViewController
 
 
