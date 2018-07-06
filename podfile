@@ -1,0 +1,12 @@
+platform :ios,'8.0'
+target 'LZMusicPlayerDemo' do
+pod 'AFNetworking'
+pod 'SDWebImage'
+pod 'Masonry'
+pod 'MJExtension', '~> 3.0.10'
+ #分页
+    pod 'WMPageController', '~> 1.4.1'
+ #滑动菜单
+    pod 'VTMagic'
+end
+

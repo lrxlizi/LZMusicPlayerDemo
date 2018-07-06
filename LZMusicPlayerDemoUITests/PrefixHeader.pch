@@ -1,0 +1,49 @@
+//
+//  PrefixHeader.pch
+//  LZMusicPlayerDemo
+//
+//  Created by 栗子 on 2017/12/20.
+//  Copyright © 2017年 http://www.cnblogs.com/Lrx-lizi/.     https://github.com/lrxlizi/. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+//第三方
+#import <AFNetworking.h>
+#import <Masonry.h>
+#import <SDWebImage/UIImageView+WebCache.h>
+#import <MJExtension/MJExtension.h>
+#import <AVFoundation/AVFoundation.h>
+#import <MediaPlayer/MediaPlayer.h>
+#import <WMPageController.h>//
+#import <VTMagic.h>
+
+//工具类
+#import "LZNetWorking.h"
+#import "LZPlayerBottomView.h"
+#import "LZPlayerManager.h"
+#import "LZSignSongIdSimple.h"//标记歌曲id
+#import "HealpClass.h"
+
+#define LZSongUrl @"http://218.200.160.29/rdp2/v5.5/sub/listen.do?contentid=%@&ua=Iphone_Sst&version=4.243&netType=1&toneFlag=1"
+
+#define LZSCREENW [UIScreen mainScreen].bounds.size.width
+#define LZSCREENH [UIScreen mainScreen].bounds.size.height
+#define LZColor(r,g,b,a) [UIColor colorWithRed:(r)/255.0f green:(g)/255.0f blue:(b)/255.0f alpha:(a)]
+
+#define IS_IPHONE_X ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1125, 2436), [[UIScreen mainScreen] currentMode].size) : NO)
+
+
+#define LZUserDefaultsGET(key)          [[NSUserDefaults standardUserDefaults] objectForKey:key]            // 取
+#define LZUserDefaultsSET(object,key)   [[NSUserDefaults standardUserDefaults] setObject:object forKey:key] // 写
+#define LZUserDefaultsSynchronize       [[NSUserDefaults standardUserDefaults] synchronize]                 // 存
+#define LZUserDefaultsRemove(key)       [[NSUserDefaults standardUserDefaults] removeObjectForKey:key]      // 删
+
+#define COLOR_NAV_TEXT          RGBCOLOR(29, 29, 29)            //导航栏文字颜色
+//缓存key
+#define SONGLIST  @"SONGLIST"
+
+#define TOTALTIME @"TOTALTIME"
+
+#endif /* PrefixHeader_pch */
