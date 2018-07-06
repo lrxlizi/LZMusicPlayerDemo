@@ -120,15 +120,20 @@
         make.top.bottom.mas_offset(0);
     }];
     
+    __weak typeof(self) weakSelf = self;
     LZPlayerManager *manager = [LZPlayerManager lzPlayerManager];
     manager.isStartPlayer = ^(NSInteger index) {//0是开始 1 暂停
         if (index==0) {//开启定时器
-             [self startTimer];
+             [weakSelf startTimer];
             //存储歌曲总时间
-            long long int totalTime = [LZPlayerManager lzPlayerManager].player.currentItem.duration.value / [LZPlayerManager lzPlayerManager].player.currentItem.duration.timescale;
-            NSString *str = [NSString stringWithFormat:@"%lld",totalTime];
-            LZUserDefaultsSET(str, TOTALTIME);
-            LZUserDefaultsSynchronize;
+            long long int value = [LZPlayerManager lzPlayerManager].player.currentItem.duration.value;
+            long long int timescale = [LZPlayerManager lzPlayerManager].player.currentItem.duration.timescale;
+            if ( [LZPlayerManager lzPlayerManager].player.currentItem.duration.timescale != 0) {
+                  long long int totalTime = value / timescale;
+                  NSString *str = [NSString stringWithFormat:@"%lld",totalTime];
+                  LZUserDefaultsSET(str, TOTALTIME);
+                  LZUserDefaultsSynchronize;
+            }
         }else if(index==1){
         }else{
             
@@ -137,6 +142,9 @@
     
     //监听耳机事件
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(audioRouteChangeListenerCallback:)   name:AVAudioSessionRouteChangeNotification object:nil];
+}
+- (void)saveTime{
+    
 }
 #pragma mark 监听耳机事件
 - (void)audioRouteChangeListenerCallback:(NSNotification*)notification

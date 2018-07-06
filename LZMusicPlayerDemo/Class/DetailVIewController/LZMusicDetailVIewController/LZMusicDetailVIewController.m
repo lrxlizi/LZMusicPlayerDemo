@@ -46,7 +46,8 @@
    
     self.songLB.text = [NSString stringWithFormat:@"%@",[LZPlayerBottomView lzPlayerBottomView].songNameLB.text];
     self.songerLB.text = [NSString stringWithFormat:@"-- %@ --",[LZPlayerBottomView lzPlayerBottomView].songerLB.text];
-    NSString *time = [NSString stringWithFormat:@"%@",LZUserDefaultsGET(TOTALTIME)];
+    long long int totalTime = [LZPlayerManager lzPlayerManager].player.currentItem.duration.value / [LZPlayerManager lzPlayerManager].player.currentItem.duration.timescale;
+    NSString *time = [NSString stringWithFormat:@"%lld",totalTime];
     self.totalTimeLB.text = [NSString stringWithFormat:@"%02ld:%02ld", [time integerValue] / 60, [time integerValue] % 60];;
     self.sliderProgress.maximumValue =[time doubleValue];
     long long int currentTime = [LZPlayerManager lzPlayerManager].player.currentTime.value / [LZPlayerManager lzPlayerManager].player.currentTime.timescale;
