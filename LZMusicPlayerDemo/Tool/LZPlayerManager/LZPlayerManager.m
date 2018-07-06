@@ -96,7 +96,7 @@ static LZPlayerManager *_lzPlayerManager = nil;
 //当前播放
 - (void)replaceItemWithUrlString:(NSString *)urlString
 {
-
+    
    __block NSURL *url ;
    __block AVPlayerItem *item;
     [self localUrlIsSave:urlString save:^(NSString *str) {//已下载播放本地文件
@@ -106,6 +106,7 @@ static LZPlayerManager *_lzPlayerManager = nil;
     } noSave:^{//未下载
         url  = [NSURL URLWithString:urlString];
         item = [[AVPlayerItem alloc] initWithURL:url];
+        
     }];
     [self.player replaceCurrentItemWithPlayerItem:item];
     [self playerPlay];
