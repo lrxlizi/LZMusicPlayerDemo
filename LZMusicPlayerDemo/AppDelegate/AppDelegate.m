@@ -12,6 +12,7 @@
 
 @interface AppDelegate ()
 
+
 @end
 
 @implementation AppDelegate
@@ -26,6 +27,7 @@
     [session setActive:YES error:nil];
     [application beginReceivingRemoteControlEvents];//开启接收远程事件
     
+   
     
     return YES;
 }
@@ -59,7 +61,6 @@
         }
     }
 }
-
 
 
 

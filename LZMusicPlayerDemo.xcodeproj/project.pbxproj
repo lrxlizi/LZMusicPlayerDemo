@@ -11,6 +11,7 @@
 		6A7B75611FECB1A300AAB407 /* LZMusicNavViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A7B75601FECB1A300AAB407 /* LZMusicNavViewController.m */; };
 		6A7B75671FECB79800AAB407 /* LZMusicDetailVIewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A7B75661FECB79800AAB407 /* LZMusicDetailVIewController.m */; };
 		6A7B756B1FECCDDB00AAB407 /* HealpClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A7B756A1FECCDDB00AAB407 /* HealpClass.m */; };
+		6A8C071420F3027F008ABB0F /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A8C071320F3027F008ABB0F /* CoreTelephony.framework */; };
 		6ABFE8511FF1FC4F00C61988 /* LZMusicBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6ABFE8501FF1FC4F00C61988 /* LZMusicBaseViewController.m */; };
 		6ADABE9D1FEA3C0800EA7D9A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6ADABE9C1FEA3C0800EA7D9A /* ViewController.m */; };
 		6ADABEA01FEA3C0800EA7D9A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6ADABE9E1FEA3C0800EA7D9A /* Main.storyboard */; };
@@ -46,6 +47,7 @@
 		6A7B75661FECB79800AAB407 /* LZMusicDetailVIewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LZMusicDetailVIewController.m; sourceTree = "<group>"; };
 		6A7B75691FECCDDB00AAB407 /* HealpClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HealpClass.h; sourceTree = "<group>"; };
 		6A7B756A1FECCDDB00AAB407 /* HealpClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HealpClass.m; sourceTree = "<group>"; };
+		6A8C071320F3027F008ABB0F /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		6ABFE84F1FF1FC4F00C61988 /* LZMusicBaseViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LZMusicBaseViewController.h; sourceTree = "<group>"; };
 		6ABFE8501FF1FC4F00C61988 /* LZMusicBaseViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LZMusicBaseViewController.m; sourceTree = "<group>"; };
 		6ADABE951FEA3C0800EA7D9A /* LZMusicPlayerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LZMusicPlayerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -84,6 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6A8C071420F3027F008ABB0F /* CoreTelephony.framework in Frameworks */,
 				59F533669D59F2DE2D1D9925 /* libPods-LZMusicPlayerDemo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -110,6 +113,7 @@
 		69699A52A3BC5B67EC52BE70 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6A8C071320F3027F008ABB0F /* CoreTelephony.framework */,
 				30130516A6C445C53AE7A3B0 /* libPods-LZMusicPlayerDemo.a */,
 			);
 			name = Frameworks;

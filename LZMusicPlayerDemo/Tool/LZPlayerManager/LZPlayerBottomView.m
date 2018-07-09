@@ -8,8 +8,13 @@
 #define ksingerWH  44.0f
 #define kbtnWH     35.0f
 #define kToolBarH  65.0f
-
 #import "LZPlayerBottomView.h"
+
+@interface LZPlayerBottomView ()
+//监听来电
+@property (nonatomic, strong) CTCallCenter *callCenter;
+
+@end
 
 @implementation LZPlayerBottomView
 +(instancetype)lzPlayerBottomView{
@@ -142,10 +147,10 @@
     
     //监听耳机事件
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(audioRouteChangeListenerCallback:)   name:AVAudioSessionRouteChangeNotification object:nil];
+    //监听来电
+    [self monitorCall];
 }
-- (void)saveTime{
-    
-}
+
 #pragma mark 监听耳机事件
 - (void)audioRouteChangeListenerCallback:(NSNotification*)notification
 {
@@ -157,7 +162,7 @@
             NSLog(@"耳机插入");
             break;
         case AVAudioSessionRouteChangeReasonOldDeviceUnavailable:
-            [self stop];
+            [self stopAndPlay:NO];
             NSLog(@"耳机拔出，停止播放操作");
             break;
         case AVAudioSessionRouteChangeReasonCategoryChange:
@@ -166,13 +171,48 @@
             break;
     }
 }
-//耳机拔出，停止播放
-- (void)stop{
+#pragma mark 监听来电
+- (void)monitorCall{
+    __weak __typeof(self) selfWeak = self;
+    self.callCenter = [[CTCallCenter alloc] init];
+    self.callCenter.callEventHandler = ^(CTCall* call) {
+        if ([call.callState isEqualToString:CTCallStateDisconnected])
+        {//挂断继续播放
+            NSLog(@"挂断了电话咯Call has been disconnected");
+            [selfWeak stopAndPlay:YES];
+        }
+        else if ([call.callState isEqualToString:CTCallStateConnected])
+        {
+            NSLog(@"电话通了Call has just been connected");
+        }
+        else if([call.callState isEqualToString:CTCallStateIncoming])
+        {//来电暂停
+            NSLog(@"来电话了Call is incoming");
+           
+            [selfWeak stopAndPlay:NO];
+            
+        }
+        else if ([call.callState isEqualToString:CTCallStateDialing])
+        {
+            NSLog(@"正在播出电话call is dialing");
+        }
+        else
+        {
+            NSLog(@"嘛都没做Nothing is done");
+        }
+    };
+    
+}
+
+
+//耳机拔出 & 来电，停止播放
+- (void)stopAndPlay:(BOOL)isPlay{
     dispatch_async(dispatch_get_main_queue(), ^{
         [[LZPlayerManager lzPlayerManager] playAndPause];
-        [LZPlayerBottomView lzPlayerBottomView].isSongPlayer = NO;
+        [LZPlayerBottomView lzPlayerBottomView].isSongPlayer = isPlay;
     });
 }
+
 
 #pragma mark 下一首按钮点击
 -(void)nextBtnClicked:(UIButton *)btn{

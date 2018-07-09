@@ -26,6 +26,11 @@
 #import "LZSignSongIdSimple.h"//标记歌曲id
 #import "HealpClass.h"
 
+//监听来电
+#import <CoreTelephony/CTCallCenter.h>
+#import <CoreTelephony/CTCall.h>
+
+
 #define LZSongUrl @"http://218.200.160.29/rdp2/v5.5/sub/listen.do?contentid=%@&ua=Iphone_Sst&version=4.243&netType=1&toneFlag=1"
 
 #define LZSCREENW [UIScreen mainScreen].bounds.size.width
