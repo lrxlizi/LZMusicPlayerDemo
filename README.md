@@ -6,6 +6,6 @@
 5.支持下载到本地播放
 6.锁屏状态和未锁屏歌曲播放同步
 7.监听耳机事件
-
+8.添加来电暂停 挂断继续播放
 ![Image text](https://mmbiz.qpic.cn/mmbiz_gif/y0tTxZxTy826nAYmibVXV04ibbPI2WtFJulWrwPVqHBaX5HGaoP75HSgnuLOe6xjsKiaoarTh5shg6e8Z991ibyoZw/0?wx_fmt=gif)
 
